@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Gatuno 🐾 - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+<header class="header">
+    <h1>🐱✨ Blog Gatuno ✨🐱</h1>
+</header>
+<nav class="top-nav">
+    <form action="{% url 'lista_posts' %}" method="get" class="search-form">
+        <input type="text" name="q" placeholder="Buscar gatitos... 🐈‍⬛🔍" value="{{ request.GET.q }}">
+        <button type="submit">Buscar</button>
+        <a href="{% url 'lista_posts' %}">⬅️ Volver</a>
+    </form>
+
+    <div class="nav-right">
+        {% if user.is_authenticated %}
+            <span>Hola, {{ user.username }} 👋</span> |
+            <a href="{% url 'crear_post' %}">Crear Post 📝</a> |
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn-link">Cerrar sesión ❌</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Iniciar sesión 🔐</a> |
+            <a href="{% url 'register' %}">Registrarse 🐾</a>
+        {% endif %}
+    </div>
+</nav>
+
+<main class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</main>
+
+</body>
+</html>

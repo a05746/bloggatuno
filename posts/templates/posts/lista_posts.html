@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+
+<h2 class="section-title">✨ Posts recientes 😻✨</h2>
+
+{% if posts %}
+<div class="carousel-wrapper">
+    <button id="btn-left" class="carousel-btn">⬅️🐱</button>
+
+    <div id="carousel" class="carousel">
+        {% for post in posts %}
+        <div class="carousel-item">
+            {% if post.imagen %}
+                <img src="{{ post.imagen.url }}" alt="{{ post.titulo }}">
+            {% endif %}
+            <h3>{{ post.titulo }}</h3>
+            <p>{{ post.contenido|truncatechars:80 }}</p>
+            <a href="{% url 'detalle_post' post.pk %}">Leer más 📖</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <button id="btn-right" class="carousel-btn">🐱➡️</button>
+</div>
+{% else %}
+<p class="no-posts">No hay posts para mostrar. 🐾 ¡Crea uno nuevo!</p>
+{% endif %}
+
+<section class="videos-section">
+    <h3>Videos Graciosos de Gatos 🐈‍⬛😂</h3>
+    <div class="videos-grid">
+        <iframe src="https://www.youtube.com/embed/HdwwGkesOSc" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/5SWIuLuV59I" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/MN4DQ_Vd0nE" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/OqH9RoUNG24" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/fUklfPpMcHY" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/JBpLNxX8D3U" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/j8jVnyXYKcU" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/4b0gzFXmtCk&list=RD4b0gzFXmtCk&start_radio=1" frameborder="0" allowfullscreen></iframe>
+    </div>
+</section>
+
+<script>
+    const carousel = document.getElementById('carousel');
+    const btnLeft = document.getElementById('btn-left');
+    const btnRight = document.getElementById('btn-right');
+
+    btnLeft.addEventListener('click', () => {
+        carousel.scrollBy({ left: -400, behavior: 'smooth' });
+    });
+
+    btnRight.addEventListener('click', () => {
+        carousel.scrollBy({ left: 400, behavior: 'smooth' });
+    });
+</script>
+
+{% endblock %}
+   

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+    {% block content %}
+    <title>Iniciar sesión</title>
+    <h1>🔐 Iniciar sesión</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Iniciar sesión</button>
+    </form>
+
+    <a href="{% url 'lista_posts' %}">⬅️ Volver</a>
+    {% endblock %}

@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Sesión cerrada</h1>
+  <p>Has cerrado sesión correctamente.</p>
+  <a href="{% url 'lista_posts' %}">Volver a iniciar sesión</a>
+{% endblock %}

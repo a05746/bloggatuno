@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="post-detail">
+  <h2 class="post-title">🐾 {{ post.titulo }} 🐾</h2>
+
+  <p class="post-content">✨ {{ post.contenido }} ✨</p>
+
+  {% if post.imagen %}
+    <div class="image-container">
+      <img class="post-image" src="{{ post.imagen.url }}" alt="Imagen de {{ post.titulo }}">
+    </div>
+  {% endif %}
+
+  <p class="post-meta">📅 Publicado por <strong>{{ post.autor.username }}</strong> el {{ post.fechapublicacion }}</p>
+
+  <div class="post-actions">
+    <a href="{% url 'editar_post' post.pk %}">✏️ Editar</a> |
+    <a href="{% url 'eliminar_post' post.pk %}">🗑️ Eliminar</a> |
+    <a href="{% url 'lista_posts' %}">⬅️ Volver</a>
+  </div>
+
+  <hr>
+
+  <div class="cat-quotes">
+    <p>🐈‍⬛ "Un gato es un poema de pelusa y misterio." ✨</p>
+    <p>😻 "Los gatos dejan huellas de patas en tu corazón." 💙</p>
+    <p>🐾 "Donde hay un gato, hay magia." 🌟</p>
+  </div>
+
+  <div class="comments-section">
+    <h3>💬 Comentarios 🐱</h3>
+    {% for comentario in comentarios %}
+      <div class="comment">
+        <p><strong>{{ comentario.autor.username }}</strong> — {{ comentario.fecha_creacion }}</p>
+        <p>{{ comentario.contenido }}</p>
+      </div>
+      <hr>
+    {% empty %}
+      <p>😿 No hay comentarios aún. Sé el primero en maullar algo.</p>
+    {% endfor %}
+  </div>
+
+  {% if user.is_authenticated %}
+    <div class="add-comment">
+      <h4>📝 Agregar comentario</h4>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">🐾 Publicar</button>
+      </form>
+    </div>
+  {% else %}
+    <p><a href="{% url 'login' %}">Inicia sesión</a> para comentar 🐱‍👓</p>
+  {% endif %}
+</div>
+
+{% endblock %}
+
